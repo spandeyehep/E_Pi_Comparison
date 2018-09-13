@@ -144,15 +144,26 @@ void AnalyzeHGCMuons::Assignment1(int jentry)
   // }
   // if(fin==0){h_ratio->Fill(-1);}
   // else{h_ratio->Fill(in/fin);}
-  for(int n=1;n<28;n++){
-    float in=0;
-    float fin=0;
+  float in_NR=0;
+  float in_En=0;
+
+  float fin_NR=rechit_layer->size();
+  float fin_En=0;
+  for(int i=0;i<rechit_energy->size();i++){fin_En+=rechit_energy->at(i);}
+
+  for(int n=1;n<=28;n++){
+    float in_ratio=0;
+    float fin_ratio=0;
+    
     int n1=n;			// number of layers under consideration
     for(int i=0;i<rechit_layer->size();i++){
-      if(rechit_layer->at(i)<=n1){in++;}
-      if(rechit_layer->at(i)>28-n1){fin++;}
+      if(rechit_layer->at(i)<=n1){in_ratio++;}
+      if(rechit_layer->at(i)>28-n1){fin_ratio++;}
+      if(rechit_layer->at(i)==n){in_NR++;in_En+=rechit_energy->at(i);}
     }
-    if(fin==0){h_RatioCheck->Fill(n1,-1);}
-    else{h_RatioCheck->Fill(n1,in/fin);}    
+    if(fin_ratio==0){h_RatioCheck->Fill(n1,-1);}
+    else{h_RatioCheck->Fill(n1,in_ratio/fin_ratio);}
+    h_CumuNRechits->Fill(n,in_NR/fin_NR);
+    h_CumuEnergy->Fill(n,in_En/fin_En);
   }
 }

@@ -43,6 +43,8 @@ class AnalyzeHGCMuons : public HGCNtupleVariables{
   TH3F* h_Pion;			// Shower developement of pion candidates
   TH1F* h_ratio;
   TH2F* h_RatioCheck;		// histogram to check e-pi distinction for different n1's
+  TH2F* h_CumuNRechits;		// histogram of cumulative rechits
+  TH2F* h_CumuEnergy;
 };
 #endif
 
@@ -91,6 +93,8 @@ void AnalyzeHGCMuons::BookHistogram(const char *outFileName) {
   h_Pion = new TH3F("PShower","Pion candidate shower",30,0,30,20,-10,10,20,-10,10);
   h_ratio=new TH1F("LayerRatio","nrechits ratio first 15 layers/last 15 layers",210,-1,20);
   h_RatioCheck=new TH2F("RatioCheck","initial to final layer rechits ratio",26,1,27,600,-1,5); /* for 300,-1,2 a distinct feature was seen */
+  h_CumuNRechits=new TH2F("CumuNrechits","ratio of cumulative n-rechits",27,1,28,100,0,1);
+  h_CumuEnergy=new TH2F("CumuEnergy","ratio of cumulative energy",27,1,28,100,0,1);
 }
 
 
